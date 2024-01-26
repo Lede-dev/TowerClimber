@@ -7,6 +7,11 @@
 #include "EnhancedInputSubsystems.h"
 #include "Character/King.h"
 
+APlatformerController::APlatformerController()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void APlatformerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -34,6 +39,15 @@ void APlatformerController::MoveCharacter(const FInputActionValue& Value)
 {
 	const float Direction = Value.Get<float>();
 	KingCharacter->AddMovementInput(FVector(Direction * MovementSpeed, 0, 0));
+
+	if (Direction > 0)
+	{
+		SetControlRotation(FRotator::ZeroRotator);
+	}
+	else if (Direction < 0)
+	{
+		SetControlRotation(FRotator(0, 180, 0));
+	}
 }
 
 void APlatformerController::JumpCharacter()

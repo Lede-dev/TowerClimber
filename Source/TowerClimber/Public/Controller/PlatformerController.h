@@ -33,6 +33,9 @@ protected:
 private:
 	TWeakObjectPtr<AKing> KingCharacter;
 
+public:
+	APlatformerController();
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
