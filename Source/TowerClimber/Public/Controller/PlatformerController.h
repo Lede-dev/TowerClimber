@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "PlatformerController.generated.h"
 
+class AKing;
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
@@ -25,6 +26,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
 	UInputAction* JumpAction;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
+	float MovementSpeed;
+	
+private:
+	TWeakObjectPtr<AKing> KingCharacter;
 
 protected:
 	virtual void BeginPlay() override;

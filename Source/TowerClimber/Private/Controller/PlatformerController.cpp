@@ -5,6 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Character/King.h"
 
 void APlatformerController::BeginPlay()
 {
@@ -14,6 +15,8 @@ void APlatformerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
+
+	KingCharacter = MakeWeakObjectPtr(Cast<AKing>(GetCharacter()));
 }
 
 void APlatformerController::SetupInputComponent()
@@ -30,10 +33,10 @@ void APlatformerController::SetupInputComponent()
 void APlatformerController::MoveCharacter(const FInputActionValue& Value)
 {
 	const float Direction = Value.Get<float>();
-	UE_LOG(LogTemp, Warning, TEXT("Move. Direction %f"), Direction);
+	KingCharacter->AddMovementInput(FVector(Direction * MovementSpeed, 0, 0));
 }
 
 void APlatformerController::JumpCharacter()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Jump."));
+	KingCharacter->Jump();
 }
