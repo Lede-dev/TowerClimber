@@ -54,6 +54,19 @@ void AKing::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	if (APig* Pig = Cast<APig>(OtherActor))
 	{
-		Defeat();
+		if (GetCharacterMovement()->IsFalling() && GetVelocity().Z < 0)
+		{
+			Pig->Defeat();
+
+			// Launch Player Character
+			const FVector LaunchForward = GetActorForwardVector() * LaunchPowerWhenKillEnemy.X;
+			const FVector LaunchUp = GetActorUpVector() * LaunchPowerWhenKillEnemy.Z;
+			const FVector LaunchRight = GetActorRightVector() * LaunchPowerWhenKillEnemy.Y;
+			LaunchCharacter(LaunchForward + LaunchUp + LaunchRight, true, true);
+		}
+		else
+		{
+			Defeat();
+		}
 	}
 }

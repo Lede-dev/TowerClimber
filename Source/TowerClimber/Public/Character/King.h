@@ -23,8 +23,11 @@ protected:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
+	FVector LaunchPowerWhenKillEnemy;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
 	FVector LaunchPowerWhenDefeated;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
 	TSubclassOf<UCameraShakeBase> DefeatCameraShake;
 
