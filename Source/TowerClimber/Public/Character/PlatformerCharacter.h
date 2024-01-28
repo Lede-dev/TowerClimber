@@ -42,11 +42,28 @@ protected:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
 	FMovementProperty MovementProperty;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	FName NameOfJumpToDefeatedNode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	USoundBase* DeathSound;
+	
+protected:
+	UPROPERTY(VisibleAnywhere, Category="Platformer")
+	bool bIsDefeated;
 	
 public:
 	APlatformerCharacter();
 
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	virtual void Defeat();
+
+public:
+	UFUNCTION(Blueprintable, Category="Platformer")
+	bool IsDefeated() const { return bIsDefeated; }
 	
 };
