@@ -6,12 +6,67 @@
 #include "PaperZDCharacter.h"
 #include "PlatformerCharacter.generated.h"
 
-/**
- * 
- */
+
+USTRUCT(BlueprintType)
+struct FMovementProperty
+{
+	GENERATED_BODY()
+
+public:
+	FMovementProperty():
+	GravityScale(3.0f),
+	JumpZVelocity(1100.0f),
+	AirControl(0.3f)
+	{
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GravityScale;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float JumpZVelocity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AirControl;
+};
+
 UCLASS()
 class TOWERCLIMBER_API APlatformerCharacter : public APaperZDCharacter
 {
 	GENERATED_BODY()
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	FMovementProperty MovementProperty;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	FName NameOfJumpToDefeatedNode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	USoundBase* DeathSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	float PlatformCheckDistance;
+	
+protected:
+	UPROPERTY(VisibleAnywhere, Category="Platformer")
+	bool bIsDefeated;
+	
+public:
+	APlatformerCharacter();
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+
+public:
+	virtual void Defeat();
+
+public:
+	UFUNCTION(Blueprintable, Category="Platformer")
+	bool IsDefeated() const { return bIsDefeated; }
+
+protected:
+	virtual void UpdateOneWayPlatformCollision();
 	
 };
