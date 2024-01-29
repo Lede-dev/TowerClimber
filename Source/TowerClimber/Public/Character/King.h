@@ -31,12 +31,25 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
 	TSubclassOf<UCameraShakeBase> DefeatCameraShake;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
+	float CoyoteTimeLength;
+	
+	UPROPERTY(VisibleAnywhere, Category="King")
+	bool bIsInCoyoteTime;
+
+private:
+	FTimerHandle CoyoteTimer;
+	
 public:
 	AKing();
 
 protected:
 	virtual void BeginPlay() override;
+	
+	virtual bool CanJumpInternal_Implementation() const override;
+	virtual void OnWalkingOffLedge_Implementation(const FVector& PreviousFloorImpactNormal, const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta) override;
 
+	
 public:
 	virtual void Defeat() override;
 

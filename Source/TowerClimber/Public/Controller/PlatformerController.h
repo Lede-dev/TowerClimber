@@ -26,6 +26,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
 	UInputAction* JumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
+	UInputAction* RestartAction;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
 	float MovementSpeed;
@@ -43,6 +46,7 @@ protected:
 private:
 	void MoveCharacter(const FInputActionValue& Value);
 	void JumpCharacter();
+	void RestartGame();
 	
 };
 

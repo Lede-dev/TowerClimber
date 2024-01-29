@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Character/King.h"
+#include "Kismet/GameplayStatics.h"
 
 APlatformerController::APlatformerController()
 {
@@ -32,6 +33,7 @@ void APlatformerController::SetupInputComponent()
 	{
 		EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlatformerController::MoveCharacter);
 		EnhancedInput->BindAction(JumpAction, ETriggerEvent::Started, this, &APlatformerController::JumpCharacter);
+		EnhancedInput->BindAction(RestartAction, ETriggerEvent::Started, this, &APlatformerController::RestartGame);
 	}
 }
 
@@ -54,3 +56,10 @@ void APlatformerController::JumpCharacter()
 {
 	KingCharacter->Jump();
 }
+
+void APlatformerController::RestartGame()
+{
+	const FName LevelName = FName(UGameplayStatics::GetCurrentLevelName(this));
+	UGameplayStatics::OpenLevel(this, LevelName);
+}
+

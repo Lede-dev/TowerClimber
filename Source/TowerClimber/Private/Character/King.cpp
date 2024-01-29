@@ -28,10 +28,32 @@ void AKing::BeginPlay()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AKing::OnBeginOverlap);
 }
 
+bool AKing::CanJumpInternal_Implementation() const
+{
+	return Super::CanJumpInternal_Implementation() || bIsInCoyoteTime;
+}
+
+void AKing::OnWalkingOffLedge_Implementation(const FVector& PreviousFloorImpactNormal,
+	const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta)
+{
+	bIsInCoyoteTime = true;
+	
+	FTimerManager& Timer = GetWorld()->GetTimerManager();
+	if (Timer.IsTimerActive(CoyoteTimer))
+	{
+		Timer.ClearTimer(CoyoteTimer);
+	}
+
+	Timer.SetTimer(CoyoteTimer, [this]
+	{
+		bIsInCoyoteTime = false;
+	}, CoyoteTimeLength, false);
+}
+
 void AKing::Defeat()
 {
 	Super::Defeat();
-
+	
 	// Disable Y Plane Constraint
 	GetCharacterMovement()->SetPlaneConstraintEnabled(false);
 
