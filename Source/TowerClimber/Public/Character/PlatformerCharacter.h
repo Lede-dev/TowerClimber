@@ -36,10 +36,6 @@ class TOWERCLIMBER_API APlatformerCharacter : public APaperZDCharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere)
-	UPaperZDAnimationComponent* PaperAnimationComponent;
-
-protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
 	FMovementProperty MovementProperty;
 
@@ -48,6 +44,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
 	USoundBase* DeathSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Platformer")
+	float PlatformCheckDistance;
 	
 protected:
 	UPROPERTY(VisibleAnywhere, Category="Platformer")
@@ -58,6 +57,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 public:
 	virtual void Defeat();
@@ -65,5 +65,8 @@ public:
 public:
 	UFUNCTION(Blueprintable, Category="Platformer")
 	bool IsDefeated() const { return bIsDefeated; }
+
+protected:
+	virtual void UpdateOneWayPlatformCollision();
 	
 };

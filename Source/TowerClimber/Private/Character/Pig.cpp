@@ -15,6 +15,7 @@ APig::APig()
 	WallDetector->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	WallDetector->SetCollisionResponseToAllChannels(ECR_Ignore);
 	WallDetector->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Overlap);
+	WallDetector->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Overlap);
 
 	LedgeDetector = CreateDefaultSubobject<UBoxComponent>(TEXT("LedgeDetector"));
 	LedgeDetector->SetupAttachment(RootComponent);
@@ -23,6 +24,7 @@ APig::APig()
 	LedgeDetector->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	LedgeDetector->SetCollisionResponseToAllChannels(ECR_Ignore);
 	LedgeDetector->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Overlap);
+	LedgeDetector->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Overlap);
 	
 	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 }
