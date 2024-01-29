@@ -71,6 +71,22 @@ void AKing::Defeat()
 	UGameplayStatics::PlayWorldCameraShake(this, DefeatCameraShake, GetActorLocation(), 0.0f, 10000.0f, 0);
 }
 
+void AKing::SetJumpBuffering()
+{
+	bIsJumpBuffering = true;
+
+	FTimerManager& Timer = GetWorld()->GetTimerManager();
+	if (Timer.IsTimerActive(JumpBufferTimer))
+	{
+		Timer.ClearTimer(JumpBufferTimer);
+	}
+
+	Timer.SetTimer(JumpBufferTimer, [this]
+	{
+		bIsJumpBuffering = false;
+	}, JumpBufferLength, false);
+}
+
 void AKing::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

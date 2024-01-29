@@ -37,6 +37,19 @@ void APlatformerController::SetupInputComponent()
 	}
 }
 
+void APlatformerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (KingCharacter.IsValid())
+	{
+		if (KingCharacter->CanJump() && KingCharacter->IsJumpBuffering())
+		{
+			KingCharacter->Jump();
+		}
+	}
+}
+
 void APlatformerController::MoveCharacter(const FInputActionValue& Value)
 {
 	const float Direction = Value.Get<float>();
@@ -54,7 +67,17 @@ void APlatformerController::MoveCharacter(const FInputActionValue& Value)
 
 void APlatformerController::JumpCharacter()
 {
-	KingCharacter->Jump();
+	if (KingCharacter.IsValid())
+	{
+		if (KingCharacter->CanJump())
+		{
+			KingCharacter->Jump();
+		}
+		else
+		{
+			KingCharacter->SetJumpBuffering();
+		}
+	}
 }
 
 void APlatformerController::RestartGame()

@@ -33,12 +33,19 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
 	float CoyoteTimeLength;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="King")
+	float JumpBufferLength;
 	
 	UPROPERTY(VisibleAnywhere, Category="King")
 	bool bIsInCoyoteTime;
 
+	UPROPERTY(VisibleAnywhere, Category="King")
+	bool bIsJumpBuffering;
+
 private:
 	FTimerHandle CoyoteTimer;
+	FTimerHandle JumpBufferTimer;
 	
 public:
 	AKing();
@@ -49,9 +56,11 @@ protected:
 	virtual bool CanJumpInternal_Implementation() const override;
 	virtual void OnWalkingOffLedge_Implementation(const FVector& PreviousFloorImpactNormal, const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta) override;
 
-	
 public:
 	virtual void Defeat() override;
+
+	void SetJumpBuffering();
+	bool IsJumpBuffering() const { return bIsJumpBuffering; }
 
 private:
 	UFUNCTION()
